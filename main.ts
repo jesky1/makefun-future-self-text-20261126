@@ -16,9 +16,24 @@ export const LINE =
 // The gate allows 1..200 characters and exactly one line: refuse to write
 // an invalid entry rather than ship a file the judge never sees. Also
 // refuse leading/trailing whitespace — a stray space would count against
-// the 200-character budget and look sloppy on the bounty page.
-if (LINE.length < 1 || LINE.length > 200 || LINE.includes("\n") || LINE !== LINE.trim()) {
+// the 200-character budget and look sloppy on the bounty page. The line
+// must also open as a text from the future self, or it fails the judge's
+// first criterion outright.
+if (
+  LINE.length < 1 ||
+  LINE.length > 200 ||
+  LINE.includes("\n") ||
+  LINE !== LINE.trim() ||
+  !LINE.startsWith("Future you")
+) {
   console.error(`invalid entry: ${LINE.length} chars`);
+  process.exit(1);
+}
+
+// Reject control characters too: a stray tab or escape would survive the
+// length check but read as noise in the judge's head-to-head text.
+if (/[\u0000-\u001f\u007f]/.test(LINE)) {
+  console.error("invalid entry: control character in line");
   process.exit(1);
 }
 
