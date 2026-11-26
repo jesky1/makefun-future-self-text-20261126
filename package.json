@@ -1,0 +1,1 @@
+{"description":"One funny text from your future self for make.fun: the unread email you meant to deal with later is still unread in 2033 — and it has grandchildren now","license":"MIT","name":"makefun-future-self-text-20261126","private":true,"scripts":{"start":"node main.ts","test":"node --test main.test.ts"},"type":"module","version":"1.0.0"}
